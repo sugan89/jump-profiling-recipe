@@ -43,6 +43,9 @@ NEGCON_CODES = [
     "JCP2022_915130",
     "JCP2022_915129",
     "JCP2022_915128",
+    "BRDN0000559463",
+    "BRDN0000559460",
+    "BRDN0000559468"
 ]
 
 
@@ -141,4 +144,6 @@ def load_metadata(sources: list[str], plate_types: list[str]):
     plate = get_plate_metadata(sources, plate_types)
     well = get_well_metadata(plate_types)
     meta = well.merge(plate, on=["Metadata_Source", "Metadata_Plate"])
+    meta_kras = pd.read_csv('./inputs/metadata/luad.csv.gz')
+    meta = pd.concat([meta, meta_kras]).reset_index(drop=True)
     return meta

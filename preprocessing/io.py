@@ -73,10 +73,10 @@ def load_data(sources, plate_types):
 
     with pq.ParquetFile(paths[0]) as f:
         meta_cols = find_meta_cols(f.schema.names)
+    with pq.ParquetFile(paths[-1]) as f:
         feat_cols = find_feat_cols(f.schema.names)
     meta = np.empty([total, len(meta_cols)], dtype="|S128")
     feats = np.empty([total, len(feat_cols)], dtype=np.float32)
-
     def read_parquet(params):
         path, start, end = params
         df = pd.read_parquet(path)
